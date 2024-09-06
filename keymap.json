@@ -1,0 +1,136 @@
+[
+  {
+    // visual and normal mode
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "bindings": {
+      // Key Resets
+      "ctrl-k": "vim::Up", // prevent default behaviour after jumpting back to editor from terminal
+
+      // Editor Stuff
+      "space f n": "workspace::NewFile", // create a new file
+      ";": "command_palette::Toggle", // alies for to open command pallet ":" - so you don't have to hold shift 😉
+
+      // Closing stuff
+      "space b d": "pane::CloseActiveItem", // close the current active buffer - it will prompt if it has unsaved changes
+      "space b P": "pane::CloseAllItems", // closse all buffers - it will prompt if it has unsaved changes
+
+      // Move lines up and down
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown",
+
+      // Searching
+      "space f w": "pane::DeploySearch", // project wide search
+      "g w": "buffer_search::Deploy", // search current buffer with thing under the cursor
+      "space f f": "file_finder::Toggle", // toggle file finder
+
+      // Code actions
+      "shift-k": "editor::Hover", // hover effect - shows details about the thing under cursor
+      "space c a": "editor::ToggleCodeActions",
+      "space r a": "editor::Rename", // rename all referances under the cursor (in current buffer)
+      "g r": "editor::FindAllReferences", // find all referances of current thing under the cursor (project wide)
+      "space t t": "diagnostics::Deploy", // open diagnostics for current buffer
+      "space c d": "editor::GoToDiagnostic", // expand diagnostic message
+      "space f m": "editor::Format", // format the editor (manually)
+
+      // Tab Navigation
+      "shift-h": "pane::ActivatePrevItem",
+      "shift-l": "pane::ActivateNextItem",
+      "space o": "tab_switcher::Toggle", // toggle tab list
+
+      // Terminal
+
+      // Section navigations
+      "space %": "workspace::NewTerminal", // new termianal instance
+      "ctrl-j": "terminal_panel::ToggleFocus", // focus active terminal
+      "ctrl-h": "project_panel::ToggleFocus",
+
+      //
+      "space e": "project_panel::ToggleFocus", // focus to project panel
+      "space n": "workspace::ToggleLeftDock", // toggle left dock
+      // "space j": "buffer_search::FocusEditor",
+      "space m": "outline::Toggle"
+      // "x":k ["workspace::SendKeystrokes", "_x"]
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-l": "project_panel::ToggleFocus", // jump back to editor
+      "space n": "workspace::ToggleLeftDock", // toggle left dock
+      "d": "project_panel::Delete",
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename"
+    }
+  },
+  // Terminal bindings
+  {
+    "context": "Terminal",
+    "bindings": {
+      // navigate between terminal tabs
+      "shift-h": "pane::ActivatePrevItem",
+      "shift-l": "pane::ActivateNextItem",
+
+      "space n": "workspace::NewTerminal",
+      "ctrl-k": "terminal_panel::ToggleFocus", // jump back to editor
+      "space e": "project_panel::ToggleFocus" // jump to project panel
+    }
+  },
+
+  // Enable subword motions
+  {
+    "context": "VimControl && !menu && vim_mode != operator",
+    "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd"
+    }
+  },
+
+  // Same motions that is used to navigate split screen to navigate between panes
+  {
+    "context": "Dock",
+    "bindings": {
+      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
+      // ... or other keybindings
+    }
+  },
+  {
+    // insert mode
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": ["workspace::SendKeystrokes", "escape"],
+      "k j": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    // normal mode
+    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+    "bindings": {
+      "space \"": ["editor::OpenTerminal"],
+      "k j": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "space f f": "file_finder::Toggle", // toggle file finder
+      "space q q": "zed::Quit" // Quit the editor (won't save unsaved stuff, Also, it won't prompt to confirm the choice unless 'confim_quit' is set true in settings.json)
+    }
+  }
+  // {
+  //   "context": "vim_mode == visual",
+  //   "bindings": {
+  //     "shift-n": [
+  //       "vim::PushOperator",
+  //       {
+  //         "AddSurrounds": {}
+  //       }
+  //     ]
+  //   }
+  // }
+]
